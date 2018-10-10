@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+        
+<generatorConfiguration>
+	<context id="mysql" targetRuntime="MyBatis3">
+		
+		<!--避免生成重复代码的插件-->
+		<plugin type="com.ssm.tmall.util.OverIsMergeablePlugin"></plugin>
+		
+		<!--是否在代码中显示注释-->
+		<commentGenerator>
+            <property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		
+		<!--数据库链接地址账号密码-->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/tmall" 
+		userId="root" password="root"></jdbcConnection>
+		
+		<!-- java类型处理器 
+        用于处理DB中的类型到Java中的类型，默认使用JavaTypeResolverDefaultImpl；
+        注意一点，默认会先尝试使用Integer，Long，Short等来对应DECIMAL和 NUMERIC数据类型； -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        
+        <!--生成entity类存放位置-->
+        <javaModelGenerator targetPackage="com.ssm.tmall.entity" targetProject="src/main/java">
+        	<property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        
+        <!--生成xml映射文件存放位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        
+        <!--生成mapper即Dao类存放位置-->
+        <javaClientGenerator targetPackage="com.ssm.tmall.mapper" type="XMLMAPPER" targetProject="src/main/java">
+               <property name="enableSubPackages" value="true"/>
+          </javaClientGenerator>
+        
+        <!--生成对应表及类名-->
+        <table tableName="category" domainObjectName="Category" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="categoryId" sqlStatement="JDBC"/>
+        </table>
+         
+        <table tableName="property" domainObjectName="Property" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="propertyId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="product" domainObjectName="Product" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="productId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="productimage" domainObjectName="ProductImage" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="imageId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="orders" domainObjectName="Orders" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="orderId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="productproperty" domainObjectName="ProductProperty" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="productPropertyId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="review" domainObjectName="Review" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="reviewId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="users" domainObjectName="Users" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="userId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="orderitem" domainObjectName="OrderItem" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="itemId" sqlStatement="JDBC"/>
+        </table>
+       
+        
+	</context>
+	
+</generatorConfiguration>
+        
+       
+        
+	

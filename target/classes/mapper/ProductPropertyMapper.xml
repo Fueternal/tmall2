@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.tmall.mapper.ProductPropertyMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.tmall.entity.ProductProperty">
+    <id column="productPropertyId" jdbcType="INTEGER" property="productPropertyId" />
+    <result column="productId" jdbcType="INTEGER" property="productId" />
+    <result column="propertyId" jdbcType="INTEGER" property="propertyId" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    productPropertyId, productId, propertyId, value
+  </sql>
+  <select id="selectByExample" parameterType="com.ssm.tmall.entity.ProductPropertyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from productproperty
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from productproperty
+    where productPropertyId = #{productPropertyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from productproperty
+    where productPropertyId = #{productPropertyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="productPropertyId" keyProperty="productPropertyId" parameterType="com.ssm.tmall.entity.ProductProperty" useGeneratedKeys="true">
+    insert into productproperty (productId, propertyId, value
+      )
+    values (#{productId,jdbcType=INTEGER}, #{propertyId,jdbcType=INTEGER}, #{value,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="productPropertyId" keyProperty="productPropertyId" parameterType="com.ssm.tmall.entity.ProductProperty" useGeneratedKeys="true">
+    insert into productproperty
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        productId,
+      </if>
+      <if test="propertyId != null">
+        propertyId,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="propertyId != null">
+        #{propertyId,jdbcType=INTEGER},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.tmall.entity.ProductProperty">
+    update productproperty
+    <set>
+      <if test="productId != null">
+        productId = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="propertyId != null">
+        propertyId = #{propertyId,jdbcType=INTEGER},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where productPropertyId = #{productPropertyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.tmall.entity.ProductProperty">
+    update productproperty
+    set productId = #{productId,jdbcType=INTEGER},
+      propertyId = #{propertyId,jdbcType=INTEGER},
+      value = #{value,jdbcType=VARCHAR}
+    where productPropertyId = #{productPropertyId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.tmall.mapper.OrderItemMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.tmall.entity.OrderItem">
+    <id column="itemId" jdbcType="INTEGER" property="itemId" />
+    <result column="userId" jdbcType="INTEGER" property="userId" />
+    <result column="orderId" jdbcType="INTEGER" property="orderId" />
+    <result column="productId" jdbcType="INTEGER" property="productId" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    itemId, userId, orderId, productId, number
+  </sql>
+  <select id="selectByExample" parameterType="com.ssm.tmall.entity.OrderItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from orderitem
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderitem
+    where itemId = #{itemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orderitem
+    where itemId = #{itemId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="itemId" keyProperty="itemId" parameterType="com.ssm.tmall.entity.OrderItem" useGeneratedKeys="true">
+    insert into orderitem (userId, orderId, productId, 
+      number)
+    values (#{userId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{number,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="itemId" keyProperty="itemId" parameterType="com.ssm.tmall.entity.OrderItem" useGeneratedKeys="true">
+    insert into orderitem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="orderId != null">
+        orderId,
+      </if>
+      <if test="productId != null">
+        productId,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.tmall.entity.OrderItem">
+    update orderitem
+    <set>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        orderId = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        productId = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=INTEGER},
+      </if>
+    </set>
+    where itemId = #{itemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.tmall.entity.OrderItem">
+    update orderitem
+    set userId = #{userId,jdbcType=INTEGER},
+      orderId = #{orderId,jdbcType=INTEGER},
+      productId = #{productId,jdbcType=INTEGER},
+      number = #{number,jdbcType=INTEGER}
+    where itemId = #{itemId,jdbcType=INTEGER}
+  </update>
+</mapper>

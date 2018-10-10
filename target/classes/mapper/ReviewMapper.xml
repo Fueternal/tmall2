@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.tmall.mapper.ReviewMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.tmall.entity.Review">
+    <id column="reviewId" jdbcType="INTEGER" property="reviewId" />
+    <result column="productId" jdbcType="INTEGER" property="productId" />
+    <result column="userId" jdbcType="INTEGER" property="userId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    reviewId, productId, userId, content, createDate
+  </sql>
+  <select id="selectByExample" parameterType="com.ssm.tmall.entity.ReviewExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from review
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from review
+    where reviewId = #{reviewId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from review
+    where reviewId = #{reviewId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="reviewId" keyProperty="reviewId" parameterType="com.ssm.tmall.entity.Review" useGeneratedKeys="true">
+    insert into review (productId, userId, content, 
+      createDate)
+    values (#{productId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="reviewId" keyProperty="reviewId" parameterType="com.ssm.tmall.entity.Review" useGeneratedKeys="true">
+    insert into review
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        productId,
+      </if>
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="createDate != null">
+        createDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.tmall.entity.Review">
+    update review
+    <set>
+      <if test="productId != null">
+        productId = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where reviewId = #{reviewId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.tmall.entity.Review">
+    update review
+    set productId = #{productId,jdbcType=INTEGER},
+      userId = #{userId,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP}
+    where reviewId = #{reviewId,jdbcType=INTEGER}
+  </update>
+</mapper>
